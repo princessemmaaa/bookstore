@@ -1,0 +1,12 @@
+{% extends 'books/base_generic.html' %} {% block content %}
+<h1>User Profiles</h1>
+<ul>
+  {% for profile in profiles %}
+  <li>
+    <a href="{% url 'books:profile_detail' profile.id %}">
+      {{ profile.user.username }}</a
+    >
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
