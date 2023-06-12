@@ -6,6 +6,7 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_date = models.DateField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    description = models.TextField() 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
