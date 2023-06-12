@@ -21,3 +21,8 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'author', 'description']  # add more fields if needed
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')

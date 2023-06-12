@@ -1,0 +1,20 @@
+<!---This is the template for the user profile editing page. It includes a form that lets users change their first name, last name, and email.-->
+
+{% extends "books/base_generic.html" %} {% block content %}
+<h1>Edit profile</h1>
+<form
+  id="editProfileForm"
+  method="POST"
+  action="{% url 'books:profile_edit_done' %}"
+>
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Update</button>
+</form>
+
+<script>
+  window.onload = function () {
+    document.getElementById("editProfileForm").reset();
+  };
+</script>
+
+{% endblock %}

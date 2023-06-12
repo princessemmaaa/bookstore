@@ -10,5 +10,9 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('<int:id>/edit/', views.book_edit, name='book_edit'),
     path('<int:id>/delete/', views.book_delete, name='book_delete'),
+    path('edit/', views.edit, name='edit'),
+    path('profile/edit/done/', views.profile_edit_done, name='profile_edit_done'),
+    path('edit/complete/', views.profile_edit_complete, name='profile_edit_complete'),
+
     # add more paths for other views if needed...
 ]

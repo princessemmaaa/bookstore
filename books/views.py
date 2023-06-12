@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .forms import BookForm
+from .forms import EditProfileForm
 
 @login_required
 def book_edit(request, id):
@@ -69,3 +70,39 @@ def register_request(request):
 def profile(request):
     return render(request, 'books/profile.html', {'user': request.user})
 
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = EditProfileForm(instance=request.user, data=request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Profile updated successfully')
+        else:
+            messages.error(request, 'Error updating your profile')
+    else:
+        user_form = EditProfileForm(instance=request.user)
+    return render(request, 'books/profile_edit_done.html', {'user_form': user_form})
+
+@login_required
+def profile_edit_done(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            request.session['updated'] = True
+            return redirect('books:profile_edit_complete')
+    else:
+        if 'updated' in request.session:
+            del request.session['updated']
+        return redirect('books:profile_edit')  # Redirect back to the form on a GET request
+
+
+@login_required
+def profile_edit_complete(request):
+    return render(request, 'books/profile_edit_complete.html')
+
+@login_required
+def profile_edit(request):
+    form = EditProfileForm(instance=request.user.profile)
+    return render(request, 'books/profile_edit.html', {'form': form})
